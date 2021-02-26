@@ -15,6 +15,8 @@ namespace Task1_1
                 int n = Convert.ToInt32(Console.ReadLine());
                 switch (n)
                 {
+                    case 0:
+                        return;
                     case 1:
                         Rectangle();
                         break;
@@ -193,7 +195,7 @@ namespace Task1_1
                 {
                     var activeFonts = from t in fonts where t.Value select t.Key;
                     string s = string.Join(", ", activeFonts);
-                    Console.WriteLine("Параметры надписи: " + (String.IsNullOrEmpty(s) ? "None" : s));
+                    Console.WriteLine("Параметры надписи: " + (string.IsNullOrEmpty(s) ? "None" : s));
                     Console.WriteLine("Введите номер параметра,0 - для сохранения изменений:");
                     int j = 1;
                     foreach (KeyValuePair<string, bool> item in fonts)
