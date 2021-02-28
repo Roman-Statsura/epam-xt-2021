@@ -53,13 +53,14 @@ namespace Task1_2
         }
 
         //Task 1.2.1
+        //Результат не округляется
         public static double AverageWordLen(string s)
         {
             StringBuilder sb = new StringBuilder();
             int count = 0;
             for (int i = 0; i < s.Length; i++)
             {
-                if (!char.IsSeparator(s[i]) && !char.IsPunctuation(s[i])) count++;
+                if (char.IsLetterOrDigit(s[i])) count++;
                 if (!char.IsPunctuation(s[i])) sb.Append(s[i]);
             }
             int len = sb.ToString().Split(" ", StringSplitOptions.RemoveEmptyEntries).Length;
