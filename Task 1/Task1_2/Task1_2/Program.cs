@@ -33,7 +33,7 @@ namespace Task1_2
                         case 3:
                             Console.WriteLine("LOWERCASE");
                             Console.WriteLine("Введите строку:");
-                            Console.WriteLine(CountLowerFistLatters(Console.ReadLine()));
+                            Console.WriteLine(CountLowerFirstLattersOnMax(Console.ReadLine()));
                             break;
                         case 4:
                             Console.WriteLine("VALIDATOR");
@@ -80,10 +80,10 @@ namespace Task1_2
         }
        
         //Task 1.2.3 
-        public static int CountLowerFistLattersWithReg(string s) =>
+        public static int CountLowerFirstLattersOnMax(string s) =>
          s.Split(new[] { ';', ':', ',' ,' '}, StringSplitOptions.RemoveEmptyEntries).Count(x => char.IsLower(x[0]));
 
-        public static int CountLowerFistLatters(string s)
+        public static int CountLowerFirstLatters(string s)
         {
             int count = 0;
             bool flag = char.IsLower(s.Trim()[0]);

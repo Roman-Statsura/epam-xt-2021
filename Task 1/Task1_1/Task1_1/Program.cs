@@ -48,7 +48,7 @@ namespace Task1_1
                         SumOf2dArray();
                         break;
                     default:
-                        Console.WriteLine("\nНу...тут нет таких заданий");
+                        Console.WriteLine(Environment.NewLine+"Ну...тут нет таких заданий");
                         break;
                 }
             }
@@ -228,10 +228,10 @@ namespace Task1_1
             int[] array = CreateArray();
             Console.WriteLine("Начальный массив:");
             foreach (var item in array) Console.Write(item + " ");
-            Console.WriteLine("\nОтсортированный массив:");
+            Console.WriteLine(Environment.NewLine + "Отсортированный массив:");
             int[] sortedArray = SortArray(array);
             foreach (var item in sortedArray) Console.Write(item + " ");
-            Console.WriteLine("\nМинимально значение: " + sortedArray[0]);
+            Console.WriteLine(Environment.NewLine + "Минимально значение: " + sortedArray[0]);
             Console.WriteLine("Максимальное значение: " + sortedArray[^1]);
         }
         public static int[] CreateArray()
