@@ -10,7 +10,6 @@ namespace Task2_1_2
         {
             List<string> figuresName = new List<string>() { "1.Линия", "2.Треугольник", "3.Квадрат", "4.Прямоугольник",
                 "5.Окружность", "6.Круг", "7.Кольцо" };
-            List<Figure> figures = new List<Figure>();
             Dictionary<User, bool> users = new Dictionary<User, bool>();
             Console.WriteLine("Введите имя и создайте пользователя:");
             string userName = Console.ReadLine();
@@ -27,7 +26,6 @@ namespace Task2_1_2
                         break;
                     }
                 }
-
                 Console.WriteLine($"{activeUser.GetName()}, Выберите действие:" + Environment.NewLine + "1.Добавить фигуру" + Environment.NewLine +
                     "2.Вывести фигуры" + Environment.NewLine + "3.Очистить холст" + Environment.NewLine + "4.Выход" + Environment.NewLine +
                     "5.Сменить пользователя" + Environment.NewLine);
