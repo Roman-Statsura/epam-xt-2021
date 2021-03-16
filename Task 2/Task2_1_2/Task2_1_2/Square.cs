@@ -2,7 +2,7 @@
 
 namespace Task2_1_2
 {
-    public class Square : Figure, IAreaCountble, IPerimetrCountble
+    public class Square : Figure, IAreaCountable, IPerimetrCountable
     {
         private readonly Line A;
         public Square(int a)

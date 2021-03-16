@@ -2,7 +2,7 @@
 
 namespace Task2_1_2
 {
-    public class Triangle : Figure, IAreaCountble, IPerimetrCountble
+    public class Triangle : Figure, IAreaCountable, IPerimetrCountable
     {
         private readonly Line A;
         private readonly Line B;

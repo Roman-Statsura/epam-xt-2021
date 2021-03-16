@@ -10,22 +10,14 @@ namespace Task2_1_2
         {
             List<string> figuresName = new List<string>() { "1.Линия", "2.Треугольник", "3.Квадрат", "4.Прямоугольник",
                 "5.Окружность", "6.Круг", "7.Кольцо" };
-            Dictionary<User, bool> users = new Dictionary<User, bool>();
+            Dictionary<string, User> users = new Dictionary<string, User>();
             Console.WriteLine("Введите имя и создайте пользователя:");
             string userName = Console.ReadLine();
             User user = new User(userName);
-            users.Add(user, true);
+            users.Add(userName, user);
+            User activeUser = user;
             while (true)
             {
-                User activeUser = null;
-                foreach (var item in users)
-                {
-                    if (item.Value)
-                    {
-                        activeUser = item.Key;
-                        break;
-                    }
-                }
                 Console.WriteLine($"{activeUser.GetName()}, Выберите действие:" + Environment.NewLine + "1.Добавить фигуру" + Environment.NewLine +
                     "2.Вывести фигуры" + Environment.NewLine + "3.Очистить холст" + Environment.NewLine + "4.Выход" + Environment.NewLine +
                     "5.Сменить пользователя" + Environment.NewLine);
@@ -43,15 +35,15 @@ namespace Task2_1_2
                         {
                             case 1:
                                 Console.WriteLine($"{activeUser.GetName()}, Введите параметры линии:");
-                                Console.WriteLine("Введите длину");
+                                Console.WriteLine("Введите длину:");
                                 int lineA = Convert.ToInt32(Console.ReadLine());
                                 Line line = new Line(lineA);
                                 line.SuccessfullyCreated();
-                                activeUser.figuresList.Add(line);
+                                activeUser.AddToCanvas(line);
                                 break;
                             case 2:
                                 Console.WriteLine($"{activeUser.GetName()}, Введите параметры фигуры треугольник:");
-                                Console.WriteLine("Введите сторону A");
+                                Console.WriteLine("Введите сторону A:");
                                 int trA = Convert.ToInt32(Console.ReadLine());
                                 Console.WriteLine("Введите сторону B:");
                                 int trB = Convert.ToInt32(Console.ReadLine());
@@ -59,7 +51,7 @@ namespace Task2_1_2
                                 int trC = Convert.ToInt32(Console.ReadLine());
                                 Triangle triangle = new Triangle(trA, trB, trC);
                                 triangle.SuccessfullyCreated();
-                                activeUser.figuresList.Add(triangle);
+                                activeUser.AddToCanvas(triangle);
                                 break;
                             case 3:
                                 Console.WriteLine($"{activeUser.GetName()}, Введите параметры фигуры квадрат:");
@@ -67,7 +59,7 @@ namespace Task2_1_2
                                 int sqA = Convert.ToInt32(Console.ReadLine());
                                 Square square = new Square(sqA);
                                 square.SuccessfullyCreated();
-                                activeUser.figuresList.Add(square);
+                                activeUser.AddToCanvas(square);
                                 break;
                             case 4:
                                 Console.WriteLine($"{activeUser.GetName()}, Введите параметры фигуры прямоугльник:");
@@ -77,7 +69,7 @@ namespace Task2_1_2
                                 int reB = Convert.ToInt32(Console.ReadLine());
                                 Rectangle rectangle = new Rectangle(reA, reB);
                                 rectangle.SuccessfullyCreated();
-                                activeUser.figuresList.Add(rectangle);
+                                activeUser.AddToCanvas(rectangle);
                                 break;
                             case 5:
                                 Console.WriteLine($"{activeUser.GetName()}, Введите параметры фигуры окружность:");
@@ -90,7 +82,7 @@ namespace Task2_1_2
                                 int cR = Convert.ToInt32(Console.ReadLine());
                                 Circle circle = new Circle(cA, cB, cR);
                                 circle.SuccessfullyCreated();
-                                activeUser.figuresList.Add(circle);
+                                activeUser.AddToCanvas(circle);
                                 break;
                             case 6:
                                 Console.WriteLine($"{activeUser.GetName()}, Введите параметры фигуры круг:");
@@ -103,7 +95,7 @@ namespace Task2_1_2
                                 int rR = Convert.ToInt32(Console.ReadLine());
                                 Round round = new Round(rA, rB, rR);
                                 round.SuccessfullyCreated();
-                                activeUser.figuresList.Add(round);
+                                activeUser.AddToCanvas(round);
                                 break;
                             case 7:
                                 Console.WriteLine($"{activeUser.GetName()}, Введите параметры фигуры кольцо:");
@@ -118,31 +110,31 @@ namespace Task2_1_2
                                 int ringOutR = Convert.ToInt32(Console.ReadLine());
                                 Ring ring = new Ring(ringA, ringB, ringInR, ringOutR);
                                 ring.SuccessfullyCreated();
-                                activeUser.figuresList.Add(ring);
+                                activeUser.AddToCanvas(ring);
                                 break;
                         }
                         break;
                     case 2:
-                        if (activeUser.figuresList.Count() == 0)
+                        if (activeUser.GetCanvas().Count() == 0)
                         {
                             Console.WriteLine("В наличии фигур нет");
                         }
                         else
                         {
                             Console.WriteLine("В наличии фигуры:");
-                            foreach (var item in activeUser.figuresList)
+                            foreach (var item in activeUser.GetCanvas())
                             {
                                 Console.WriteLine(item);
                             }
                         }
                         break;
                     case 3:
-                        activeUser.figuresList.Clear();
+                        activeUser.ClearCanvas();
                         break;
                     case 4:
                         return;
                     case 5:
-                        Console.WriteLine("1.Создать новго пользователя");
+                        Console.WriteLine("1.Создать нового пользователя");
                         Console.WriteLine("2.Выбрать существующего");
                         switch (Convert.ToInt32(Console.ReadLine()))
                         {
@@ -150,24 +142,22 @@ namespace Task2_1_2
                                 Console.WriteLine("Введите новое имя:");
                                 string newName = Console.ReadLine();
                                 User newUser = new User(newName);
-                                users.Add(newUser, true);
-                                users[activeUser] = false;
+                                users.Add(newName, newUser);
+                                activeUser = newUser;
                                 break;
                             case 2:
                                 Console.WriteLine("Выберите пользователя:");
                                 string s = string.Join(", ", users.Keys);
                                 Console.WriteLine(s);
-                                string target = Console.ReadLine();
-                                var x = from z in users where z.Key.GetName() == target select z.Key;
-                                if (x.Count() == 0)
+                                string target = Console.ReadLine();  
+                                if (!users.ContainsKey(target))
                                 {
                                     Console.WriteLine("Нет такого пользователя");
                                     break;
                                 }
                                 else
                                 {
-                                    users[activeUser] = false;
-                                    users[x.First()] = true;
+                                    activeUser = users[target];
                                     break;
                                 }
                         }

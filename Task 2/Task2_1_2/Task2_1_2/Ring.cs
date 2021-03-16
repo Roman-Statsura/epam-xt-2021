@@ -2,7 +2,7 @@
 
 namespace Task2_1_2
 {
-    public class Ring : Figure, IAreaCountble, ICircumferenceCalculateble
+    public class Ring : Figure, IAreaCountable, ICircumferenceCalculatable
     {
         private readonly Round innerRound;
         private readonly Round outRound;

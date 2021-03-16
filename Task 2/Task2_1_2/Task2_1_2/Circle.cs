@@ -2,7 +2,7 @@
 
 namespace Task2_1_2
 {
-    public class Circle : Figure, ICircumferenceCalculateble
+    public class Circle : Figure, ICircumferenceCalculatable
     {
         public (int, int) Coordinates { get; private set; }
         public int Radius { get; private set; }

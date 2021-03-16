@@ -2,7 +2,7 @@
 
 namespace Task2_1_2
 {
-    public class Round : Circle, IAreaCountble
+    public class Round : Circle, IAreaCountable
     {
         public Round(int x, int y, int rad)
             : base(x, y, rad)

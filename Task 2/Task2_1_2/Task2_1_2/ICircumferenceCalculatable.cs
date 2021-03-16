@@ -2,7 +2,7 @@
 
 namespace Task2_1_2
 {
-    interface ICircumferenceCalculateble
+    interface ICircumferenceCalculatable
     {
         public double Circumference();
     }
