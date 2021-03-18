@@ -63,6 +63,7 @@ namespace Game
                         {
                             Health -= enemy.Damage;
                             Console.WriteLine($"Зверь {enemy.Name} делал с вами жуткие вещи!");
+
                         }
                         else
                         {
