@@ -9,7 +9,7 @@ namespace Game
         public Wolf()
         {
             PositionX = 0;
-            PositionY = 19;
+            PositionY = 25;
             Icon = '?';
             Name = "Волчара";
             Health = 10;

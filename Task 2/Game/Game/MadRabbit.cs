@@ -8,7 +8,7 @@ namespace Game
     {
         public MadRabbit()
         {
-            PositionX = 9;
+            PositionX = 11;
             PositionY = 0;
             Icon = '*';
             Name = "Дикий Заяц";

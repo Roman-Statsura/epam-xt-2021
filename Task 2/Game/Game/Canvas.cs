@@ -7,11 +7,11 @@ namespace Game
     public class Canvas
     {
         public static char[,] Field { get; set; }
-        public static int WIDTH = 20;
-        public static int HEIGHT = 10;
+        public static int WIDTH = 26;
+        public static int HEIGHT = 12;
         public Canvas()
         {
-            Field = new char [10, 20];
+            Field = new char [HEIGHT, WIDTH];
             CreateCanvas();
         }
         private void CreateCanvas()

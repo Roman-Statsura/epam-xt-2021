@@ -38,37 +38,40 @@ namespace Game
             ++PositionX;
         }
         public bool IsAlive() => alive;
-        public void CheckStep(List<BaseComponent> persons)
+        public void CheckStep(List<BaseComponent> objectOnTheField)
         {
-            for (int i = 0; i < persons.Count(); i++)
+            for (int i = 0; i < objectOnTheField.Count(); i++)
             {
-                if (persons[i].PositionX == PositionX && persons[i].PositionY == PositionY)
+                if (objectOnTheField[i].PositionX == PositionX && objectOnTheField[i].PositionY == PositionY)
                 {
-                    if (persons[i] is Bonus bonus)
+                    if (objectOnTheField[i] is Bonus bonus)
                     {
                         Health += bonus.HelthBooster;
-                        persons.Remove(bonus);
+                        objectOnTheField.Remove(bonus);
                         Console.WriteLine($"Бонус {bonus.Name} активирован");
                     }
-
-                    else if (persons[i] is Barrier barrier)
+                    else if (objectOnTheField[i] is Coin coin)
+                    {
+                        objectOnTheField.Remove(coin);
+                        Console.WriteLine("Монета собрана!");
+                    }
+                    else if (objectOnTheField[i] is Barrier barrier)
                     {
                         Health += barrier.HealthReducer;
-                        persons.Remove(barrier);
+                        objectOnTheField.Remove(barrier);
                         Console.WriteLine($"Препядствие {barrier.Name} оказалось у вас на пути");
                     }
-                    else if (persons[i] is Enemy enemy)
+                    else if (objectOnTheField[i] is Enemy enemy)
                     {
                         if ((Health/enemy.Damage)<(enemy.Health/Damage))
                         {
                             Health -= enemy.Damage;
                             Console.WriteLine($"Зверь {enemy.Name} делал с вами жуткие вещи!");
-
                         }
                         else
                         {
                             Health -= enemy.Damage;
-                            persons.Remove(enemy);
+                            objectOnTheField.Remove(enemy);
                             Console.WriteLine($"Противник {enemy.Name} повержен!");
                         }
                     }

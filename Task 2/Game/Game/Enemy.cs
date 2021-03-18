@@ -6,7 +6,7 @@ namespace Game
 {
     public abstract class Enemy:Character
     {
-        public void CatchHero(int x,int y, List<BaseComponent> persons)
+        public void CatchHero(int x,int y, List<BaseComponent> objectOnTheField)
         {
             int differenceX = x - PositionX;
             int differenceY = y - PositionY;
@@ -16,9 +16,9 @@ namespace Game
                 if (differenceX > 0) // Down
                 {
                     bool stepPossibility = true;
-                    for (int i = 0; i < persons.Count; i++)
+                    for (int i = 0; i < objectOnTheField.Count; i++)
                     {
-                        if (persons[i].PositionY == PositionY && (persons[i].PositionX - PositionX) == 1)
+                        if (objectOnTheField[i].PositionY == PositionY && (objectOnTheField[i].PositionX - PositionX) == 1)
                         {
                             stepPossibility = false;
                             if (PositionY == (Canvas.WIDTH - 1)) --PositionY;
@@ -36,9 +36,9 @@ namespace Game
                 else  // UP
                 {
                     bool stepPossibility = true;
-                    for (int i = 0; i < persons.Count; i++)
+                    for (int i = 0; i < objectOnTheField.Count; i++)
                     {
-                        if (persons[i].PositionY == PositionY && (persons[i].PositionX - PositionX) == -1)
+                        if (objectOnTheField[i].PositionY == PositionY && (objectOnTheField[i].PositionX - PositionX) == -1)
                         {
                             stepPossibility = false;
                             if (PositionY == (Canvas.WIDTH - 1)) --PositionY;
@@ -59,14 +59,14 @@ namespace Game
                 if (differenceY > 0) //Right
                 {
                     bool stepPossibility = true;
-                    for (int i = 0; i < persons.Count; i++)
+                    for (int i = 0; i < objectOnTheField.Count; i++)
                     {
-                        if (persons[i].PositionX == PositionX && (persons[i].PositionY - PositionY) == 1)
+                        if (objectOnTheField[i].PositionX == PositionX && (objectOnTheField[i].PositionY - PositionY) == 1)
                         {
                             stepPossibility = false;
-                            if (PositionY == (Canvas.WIDTH - 1)) --PositionY;
-                            else if (PositionY == 0) ++PositionY;
-                            else if (y == PositionY) --PositionY;
+                            if (PositionX == (Canvas.HEIGHT - 1)) --PositionX;
+                            else if (PositionX == 0) ++PositionX;
+                            else if (x == PositionX) --PositionX;
                             else
                             {
                                 if (differenceX > 0) ++PositionX;
@@ -79,14 +79,14 @@ namespace Game
                 else  // Left
                 {
                     bool stepPossibility = true;
-                    for (int i = 0; i < persons.Count; i++)
+                    for (int i = 0; i < objectOnTheField.Count; i++)
                     {
-                        if (persons[i].PositionX == PositionX && (persons[i].PositionY - PositionY) == -1)
+                        if (objectOnTheField[i].PositionX == PositionX && (objectOnTheField[i].PositionY - PositionY) == -1)
                         {
                             stepPossibility = false;
-                            if (PositionY == (Canvas.WIDTH - 1)) --PositionY;
-                            else if (PositionY == 0) ++PositionY;
-                            else if (y == PositionY) --PositionY;
+                            if (PositionX == (Canvas.HEIGHT - 1)) --PositionX;
+                            else if (PositionX == 0) ++PositionX;
+                            else if (x == PositionX) --PositionX;
                             else
                             {
                                 if (differenceX > 0) ++PositionX;

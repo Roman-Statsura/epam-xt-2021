@@ -2,96 +2,106 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.IO;
 
 namespace Game
 {
     public class Game
     {
-        private List<BaseComponent> persons = new List<BaseComponent>();
+        private List<BaseComponent> objectOnTheField = new List<BaseComponent>();
         public void StartNewGame()
         {
             Console.WriteLine("Добро пожаловать в игру!");
             Console.WriteLine("Введите имя героя:");
             string nameOfHero = Console.ReadLine();
             Hero hero = new Hero(0, 0, nameOfHero);
-            Console.WriteLine($"{hero.Name}, Приготовьтесь! Игра начианется!");
-            Console.WriteLine("Правила: w - Вверх; d - Вправо; s - Вниз; a - Влево" + Environment.NewLine);
+            Description();
+            Console.WriteLine("Управление: Герой управляется стрелками на клавиатуре" + Environment.NewLine);
+            Console.WriteLine($"{hero.Name}, Приготовьтесь! Игра начианется!"); 
             Canvas canvas = new Canvas();
             AppleBonus appleBonus = new AppleBonus();
             CherryBonus cherryBonus = new CherryBonus();
-            persons.Add(cherryBonus);
-            persons.Add(appleBonus);
+            objectOnTheField.Add(cherryBonus);
+            objectOnTheField.Add(appleBonus);
             Rock rock = new Rock();
             Three three = new Three();
-            persons.Add(rock);
-            persons.Add(three);
+            Grenade grenade = new Grenade();
+            objectOnTheField.Add(rock);
+            objectOnTheField.Add(three);
+            objectOnTheField.Add(grenade);
             MadRabbit madRabbit = new MadRabbit();
             Wolf wolf = new Wolf();
-            persons.Add(wolf);
-            persons.Add(madRabbit);
+            objectOnTheField.Add(wolf);
+            objectOnTheField.Add(madRabbit);
+            Coin c1 = new Coin();
+            Coin c2 = new Coin();
+            Coin c3 = new Coin();
+            objectOnTheField.Add(c1);
+            objectOnTheField.Add(c2);
+            objectOnTheField.Add(c3);
             while (true)
             {
                 if (!CheckHealth(hero)) return;
                 Canvas.Field[hero.PositionX, hero.PositionY] = hero.Icon;
-                foreach (var item in persons)
+                foreach (var item in objectOnTheField)
                 {
                     Canvas.Field[item.PositionX, item.PositionY] = item.Icon;
                 }
                 canvas.PrintCanvas();
-                if (!CheckCollectedBonuses()) return;
-                Console.WriteLine(Environment.NewLine + "XP: "+hero.Health);
-                string t = Console.ReadLine();
-                switch (t)
+                if (!CheckCollectedCoins()) return;
+                Console.WriteLine(Environment.NewLine + "XP: "+hero.Health);  
+                ConsoleKeyInfo key = Console.ReadKey(true);
+                switch (key.Key)
                 {
-                    case "d":
+                    case ConsoleKey.RightArrow:
                         hero.RemoveTheTrail(Canvas.Field);
                         hero.TurnRight();
-                        hero.CheckStep(persons);
-                        foreach (var item in persons)
+                        hero.CheckStep(objectOnTheField);
+                        foreach (var item in objectOnTheField)
                         {
                             if (item is Enemy enemy)
                             {
                                 enemy.RemoveTheTrail(Canvas.Field);
-                                enemy.CatchHero(hero.PositionX, hero.PositionY, persons);
+                                enemy.CatchHero(hero.PositionX, hero.PositionY, objectOnTheField);
                             }
                         }
                         break;
-                    case "a":
+                    case ConsoleKey.LeftArrow:
                         hero.RemoveTheTrail(Canvas.Field);
                         hero.TurnLeft();
-                        hero.CheckStep(persons);
-                        foreach (var item in persons)
+                        hero.CheckStep(objectOnTheField);
+                        foreach (var item in objectOnTheField)
                         {
                             if (item is Enemy enemy)
                             {
                                 enemy.RemoveTheTrail(Canvas.Field);
-                                enemy.CatchHero(hero.PositionX, hero.PositionY, persons);
+                                enemy.CatchHero(hero.PositionX, hero.PositionY, objectOnTheField);
                             }
                         }
                         break;
-                    case "w":
+                    case ConsoleKey.UpArrow:
                         hero.RemoveTheTrail(Canvas.Field);
                         hero.TurnUp();
-                        hero.CheckStep(persons);
-                        foreach (var item in persons)
+                        hero.CheckStep(objectOnTheField);
+                        foreach (var item in objectOnTheField)
                         {
                             if (item is Enemy enemy)
                             {
                                 enemy.RemoveTheTrail(Canvas.Field);
-                                enemy.CatchHero(hero.PositionX, hero.PositionY, persons);
+                                enemy.CatchHero(hero.PositionX, hero.PositionY, objectOnTheField);
                             }
                         }
                         break;
-                    case "s":
+                    case ConsoleKey.DownArrow:
                         hero.RemoveTheTrail(Canvas.Field);
                         hero.TurnDown();
-                        hero.CheckStep(persons);
-                        foreach (var item in persons)
+                        hero.CheckStep(objectOnTheField);
+                        foreach (var item in objectOnTheField)
                         {
                             if (item is Enemy enemy)
                             {
                                 enemy.RemoveTheTrail(Canvas.Field);
-                                enemy.CatchHero(hero.PositionX, hero.PositionY, persons);
+                                enemy.CatchHero(hero.PositionX, hero.PositionY, objectOnTheField);
                             }
                         }
                         break;
@@ -107,10 +117,10 @@ namespace Game
             }
             return true;
         }
-        private bool CheckCollectedBonuses()
+        private bool CheckCollectedCoins()
         {
-            int countActiveBonuses = (from item in persons
-                                      where item is Bonus
+            int countActiveBonuses = (from item in objectOnTheField
+                                      where item is Coin
                                       select item).Count();
             if (countActiveBonuses == 0)
             {
@@ -118,6 +128,17 @@ namespace Game
                 return false;
             }
             return true;
+        }
+        private void Description()
+        {
+            Console.WriteLine("Правила игры:");
+            Console.WriteLine("Нужно собрать все монеты - '$'");
+            Console.WriteLine("Остерегайтесь диких зверей, они могут покусать или даже убить, с ними можно драться,если сил хватает");
+            Console.WriteLine("Вот их представители: Дикий Заяц - '*' и Волк - '?'");
+            Console.WriteLine("Монжно собирать бонусы: 'в' и 'я' - увеличивают XP");
+            Console.WriteLine("На пути так же встречаются препядствия: 'д'- дерево, 'к'- камень. Они отнимают XP");
+            Console.WriteLine("Берегись гранаты '@' - она убивает сразу!");
+            Console.WriteLine();
         }
     }
 }

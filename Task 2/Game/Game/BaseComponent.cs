@@ -13,8 +13,8 @@ namespace Game
         protected void CreateLocation()
         {
             Random rnd = new Random();
-            PositionX = rnd.Next(1, 10);
-            PositionY = rnd.Next(1, 20);
+            PositionX = rnd.Next(1, 11);
+            PositionY = rnd.Next(1, 25);
         }
     }
 }
