@@ -16,7 +16,7 @@ namespace Game
             string nameOfHero = Console.ReadLine();
             Hero hero = new Hero(0, 0, nameOfHero);
             Description();
-            Console.WriteLine($"{hero.Name}, Приготовьтесь! Игра начианется!"); 
+            Console.WriteLine($"{hero.Name}, Приготовьтесь! Игра начинается!"); 
             Canvas canvas = new Canvas();
             AppleBonus appleBonus = new AppleBonus();
             CherryBonus cherryBonus = new CherryBonus();
@@ -49,7 +49,7 @@ namespace Game
                 canvas.PrintCanvas();
                 if (!CheckCollectedCoins()) return;
                 Console.WriteLine(Environment.NewLine + "XP: "+hero.Health);
-                Console.WriteLine(Environment.NewLine +"Прыжков во времени: "+hero.JumpInTime);
+                Console.WriteLine("Прыжков во времени: "+hero.JumpInTime+Environment.NewLine);
                 ConsoleKeyInfo key = Console.ReadKey(true);
                 switch (key.Key)
                 {
@@ -175,7 +175,8 @@ namespace Game
             Console.WriteLine("Берегись гранаты '@' - она убивает сразу!");
             Console.WriteLine();
             Console.WriteLine("Управление: Герой управляется стрелками на клавиатуре" + Environment.NewLine);
-            Console.WriteLine("Вы можете осуществить прыжок во времени нажава 'Q'+ стрелочку, куда хотите прыгнуть"+Environment.NewLine);
+            Console.WriteLine("Вы можете осуществить прыжок во времени нажава 'Q'+ стрелочку, куда хотите прыгнуть");
+            Console.WriteLine("При прыжке время останавливается и вы перемещаетесь на две клеточки"+Environment.NewLine);
         }
     }
 }
