@@ -16,7 +16,6 @@ namespace Game
             string nameOfHero = Console.ReadLine();
             Hero hero = new Hero(0, 0, nameOfHero);
             Description();
-            Console.WriteLine("Управление: Герой управляется стрелками на клавиатуре" + Environment.NewLine);
             Console.WriteLine($"{hero.Name}, Приготовьтесь! Игра начианется!"); 
             Canvas canvas = new Canvas();
             AppleBonus appleBonus = new AppleBonus();
@@ -49,10 +48,45 @@ namespace Game
                 }
                 canvas.PrintCanvas();
                 if (!CheckCollectedCoins()) return;
-                Console.WriteLine(Environment.NewLine + "XP: "+hero.Health);  
+                Console.WriteLine(Environment.NewLine + "XP: "+hero.Health);
+                Console.WriteLine(Environment.NewLine +"Прыжков во времени: "+hero.JumpInTime);
                 ConsoleKeyInfo key = Console.ReadKey(true);
                 switch (key.Key)
                 {
+                    case ConsoleKey.Q:
+                        if (hero.JumpInTime > 0)
+                        {
+                            ConsoleKeyInfo key1 = Console.ReadKey(true);
+                            switch (key1.Key)
+                            {
+                                case ConsoleKey.UpArrow:
+                                    hero.RemoveTheTrail(Canvas.Field);
+                                    hero.TurnUp(2);
+                                    hero.JumpInTime -= 1;
+                                    hero.CheckStep(objectOnTheField);
+                                    break;
+                                case ConsoleKey.DownArrow:
+                                    hero.RemoveTheTrail(Canvas.Field);
+                                    hero.TurnDown(2);
+                                    hero.JumpInTime -= 1;
+                                    hero.CheckStep(objectOnTheField);
+                                    break;
+                                case ConsoleKey.RightArrow:
+                                    hero.RemoveTheTrail(Canvas.Field);
+                                    hero.TurnRight(2);
+                                    hero.JumpInTime -= 1;
+                                    hero.CheckStep(objectOnTheField);
+                                    break;
+                                case ConsoleKey.LeftArrow:
+                                    hero.RemoveTheTrail(Canvas.Field);
+                                    hero.TurnLeft(2);
+                                    hero.JumpInTime -= 1;
+                                    hero.CheckStep(objectOnTheField);
+                                    break;
+                            }
+                        }
+                        else Console.WriteLine("Нет возможности прыгнуть во времени(");
+                        break;
                     case ConsoleKey.RightArrow:
                         hero.RemoveTheTrail(Canvas.Field);
                         hero.TurnRight();
@@ -132,6 +166,7 @@ namespace Game
         private void Description()
         {
             Console.WriteLine("Правила игры:");
+            Console.WriteLine("Вы играете за героя - 'H'");
             Console.WriteLine("Нужно собрать все монеты - '$'");
             Console.WriteLine("Остерегайтесь диких зверей, они могут покусать или даже убить, с ними можно драться,если сил хватает");
             Console.WriteLine("Вот их представители: Дикий Заяц - '*' и Волк - '?'");
@@ -139,6 +174,8 @@ namespace Game
             Console.WriteLine("На пути так же встречаются препядствия: 'д'- дерево, 'к'- камень. Они отнимают XP");
             Console.WriteLine("Берегись гранаты '@' - она убивает сразу!");
             Console.WriteLine();
+            Console.WriteLine("Управление: Герой управляется стрелками на клавиатуре" + Environment.NewLine);
+            Console.WriteLine("Вы можете осуществить прыжок во времени нажава 'Q'+ стрелочку, куда хотите прыгнуть"+Environment.NewLine);
         }
     }
 }
