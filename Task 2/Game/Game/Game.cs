@@ -9,6 +9,7 @@ namespace Game
     public class Game
     {
         private List<BaseComponent> objectOnTheField = new List<BaseComponent>();
+        Canvas canvas = new Canvas();
         public void StartNewGame()
         {
             Console.WriteLine("Добро пожаловать в игру!");
@@ -16,28 +17,8 @@ namespace Game
             string nameOfHero = Console.ReadLine();
             Hero hero = new Hero(0, 0, nameOfHero);
             Description();
-            Console.WriteLine($"{hero.Name}, Приготовьтесь! Игра начинается!"); 
-            Canvas canvas = new Canvas();
-            AppleBonus appleBonus = new AppleBonus();
-            CherryBonus cherryBonus = new CherryBonus();
-            objectOnTheField.Add(cherryBonus);
-            objectOnTheField.Add(appleBonus);
-            Rock rock = new Rock();
-            Three three = new Three();
-            Grenade grenade = new Grenade();
-            objectOnTheField.Add(rock);
-            objectOnTheField.Add(three);
-            objectOnTheField.Add(grenade);
-            MadRabbit madRabbit = new MadRabbit();
-            Wolf wolf = new Wolf();
-            objectOnTheField.Add(wolf);
-            objectOnTheField.Add(madRabbit);
-            Coin c1 = new Coin();
-            Coin c2 = new Coin();
-            Coin c3 = new Coin();
-            objectOnTheField.Add(c1);
-            objectOnTheField.Add(c2);
-            objectOnTheField.Add(c3);
+            Initialization();
+            Console.WriteLine($"{hero.Name}, Приготовьтесь! Игра начинается!");
             while (true)
             {
                 if (!CheckHealth(hero)) return;
@@ -142,6 +123,7 @@ namespace Game
                 }
             }
         }
+
         private bool CheckHealth(Hero hero)
         {
             if (hero.Health <= 0)
@@ -177,6 +159,29 @@ namespace Game
             Console.WriteLine("Управление: Герой управляется стрелками на клавиатуре" + Environment.NewLine);
             Console.WriteLine("Вы можете осуществить прыжок во времени нажава 'Q'+ стрелочку, куда хотите прыгнуть");
             Console.WriteLine("При прыжке время останавливается и вы перемещаетесь на две клеточки"+Environment.NewLine);
+        }
+        private void Initialization()
+        {
+            AppleBonus appleBonus = new AppleBonus();
+            CherryBonus cherryBonus = new CherryBonus();
+            objectOnTheField.Add(cherryBonus);
+            objectOnTheField.Add(appleBonus);
+            Rock rock = new Rock();
+            Three three = new Three();
+            Grenade grenade = new Grenade();
+            objectOnTheField.Add(rock);
+            objectOnTheField.Add(three);
+            objectOnTheField.Add(grenade);
+            MadRabbit madRabbit = new MadRabbit();
+            Wolf wolf = new Wolf();
+            objectOnTheField.Add(wolf);
+            objectOnTheField.Add(madRabbit);
+            Coin c1 = new Coin();
+            Coin c2 = new Coin();
+            Coin c3 = new Coin();
+            objectOnTheField.Add(c1);
+            objectOnTheField.Add(c2);
+            objectOnTheField.Add(c3);
         }
     }
 }
