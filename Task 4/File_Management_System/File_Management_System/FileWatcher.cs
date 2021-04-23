@@ -61,7 +61,7 @@ namespace File_Management_System
                 File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
             }
         }
-        public void DeleteAllContent(string path)
+        private void DeleteAllContent(string path)
         {
             DirectoryInfo info = new DirectoryInfo(path);
             foreach (FileInfo file in info.GetFiles())
@@ -74,7 +74,7 @@ namespace File_Management_System
             CopyFiles(path, pathToFolder);
             Console.WriteLine(Environment.NewLine + "RollBack happened successfully!");
         }
-        public void AddStoreToList()
+        private void AddStoreToList()
         {
             string[] dirs = Directory.GetDirectories(storePath);
             for (int i = 1; i < dirs.Length+1; i++)
