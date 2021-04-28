@@ -9,37 +9,29 @@ namespace File_Management_System
         private readonly string pathToFolder = @"C:\myFile";
         private readonly string storePath = @"C:\store";
         private readonly Dictionary<int, string> listOfChanges = new Dictionary<int, string>();
+        public FileSystemWatcher watcher;
 
         public FileWatcher()
         {
+            watcher = new FileSystemWatcher(pathToFolder);
             AddStoreToList();
         }
         public Dictionary<int,string> GetlistOfChanges() => listOfChanges;
         public void Watch()
         {
-            using var watcher = new FileSystemWatcher(pathToFolder)
-            {
-                NotifyFilter = NotifyFilters.Attributes
-                                 | NotifyFilters.CreationTime
+            watcher.NotifyFilter = NotifyFilters.CreationTime
                                  | NotifyFilters.DirectoryName
                                  | NotifyFilters.FileName
-                                 | NotifyFilters.LastAccess
-                                 | NotifyFilters.LastWrite
-                                 | NotifyFilters.Security
-                                 | NotifyFilters.Size
-            };
+                                 | NotifyFilters.LastWrite;
 
             watcher.Changed += OnChanged;
             watcher.Created += OnChanged;
             watcher.Deleted += OnChanged;
             watcher.Renamed += OnChanged;
 
-            watcher.Filter = "*.*";
             watcher.IncludeSubdirectories = true;
             watcher.EnableRaisingEvents = true;
-
-            Console.WriteLine("Press enter to exit.");
-            Console.ReadLine();
+            watcher.Filter = "*.*";
         }
 
         private void OnChanged(object sender, FileSystemEventArgs e)
@@ -47,7 +39,6 @@ namespace File_Management_System
             string path = storePath + "\\" + DateTime.Now.ToString("Дата dd-MM-yy Время hh-mm-ss");
             Directory.CreateDirectory(path);
 
-            Console.WriteLine($"Changed: {e.FullPath}");
             CopyFiles(pathToFolder, path);
         }
         private static void CopyFiles(string sourcePath, string targetPath)
@@ -64,15 +55,14 @@ namespace File_Management_System
         private void DeleteAllContent(string path)
         {
             DirectoryInfo info = new DirectoryInfo(path);
-            foreach (FileInfo file in info.GetFiles())
-                file.Delete();
+            info.Delete(true);
+            Directory.CreateDirectory(path);
         }
         public void RollBack(int v)
         {
             DeleteAllContent(pathToFolder);
             string path = listOfChanges[v];
             CopyFiles(path, pathToFolder);
-            Console.WriteLine(Environment.NewLine + "RollBack happened successfully!");
         }
         private void AddStoreToList()
         {
@@ -80,13 +70,6 @@ namespace File_Management_System
             for (int i = 1; i < dirs.Length+1; i++)
             {
                 listOfChanges.Add(i, dirs[i - 1]);
-            }
-        }
-        public void PrintStroe()
-        {
-            foreach (var item in listOfChanges)
-            {
-                Console.WriteLine(item.Key + " : " + item.Value[item.Value.LastIndexOf(@"Дата")..]);
             }
         }
     }

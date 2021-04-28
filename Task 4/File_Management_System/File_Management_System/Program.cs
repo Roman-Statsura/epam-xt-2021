@@ -10,7 +10,9 @@ namespace File_Management_System
         static void Main(string[] args)
         {
             FileWatcher watcher = new FileWatcher();
-            Console.WriteLine("Select the program mode\r\n1.The observer mode\r\n2.Mode for rollback changes\r\n" +
+            Console.WriteLine("Select the program mode\r\n"+
+                "1.The observer mode\r\n"+
+                "2.Mode for rollback changes\r\n" +
                 "To exit the program, click any button");
             int.TryParse(Console.ReadLine(),out int choice);
             switch (choice)
@@ -20,14 +22,22 @@ namespace File_Management_System
                     Console.ReadLine();
                     break;
                 case 2:
-                    watcher.PrintStroe();
-                    int.TryParse(Console.ReadLine(), out int choiceOfRoll); 
-                    if (watcher.GetlistOfChanges().ContainsKey(choiceOfRoll)) 
+                    PrintStore(watcher.GetlistOfChanges());
+                    int.TryParse(Console.ReadLine(), out int choiceOfRoll);
+                    if (watcher.GetlistOfChanges().ContainsKey(choiceOfRoll))
+                    {
                         watcher.RollBack(choiceOfRoll);
+                        Console.WriteLine(Environment.NewLine + "RollBack happened successfully!");
+                    }
                     break;
                 default:
                     return;
             }
+        }
+        public static void PrintStore(Dictionary<int, string> listOfChanges)
+        {
+            foreach (var item in listOfChanges)
+                Console.WriteLine(item.Key + " : " + item.Value[item.Value.LastIndexOf(@"Дата")..]);
         }
     }
 }
