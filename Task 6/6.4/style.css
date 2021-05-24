@@ -1,0 +1,36 @@
+body{
+    background-color: rgba(71, 67, 67, 0.404);
+}
+.hosting{
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    margin: auto;
+    width: 720px;
+}
+.hosting__container{
+    text-align: center;
+    padding: 10px 20px;
+    min-width: 200px;
+}
+.hosting__img{
+    width: 50px;
+    height: auto;
+}
+.hosting__title{
+    color: rgb(230, 101, 15);
+    font-size: 18px;
+}
+.hosting__button{
+    background-color: rgb(230, 101, 15);
+    height: 30px;
+    border: 0;
+}
+.hosting__button:hover{
+    box-shadow: 2px 2px;
+    cursor: pointer;
+}
+.hosting__button-title{
+    color: white;
+    margin: 5px;
+}
