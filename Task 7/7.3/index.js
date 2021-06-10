@@ -1,11 +1,12 @@
 class Service{
     #repository = [];
+    curId = "1";
 
     add(obj){
-        if (this.getById(obj.id)) return null;
         if (typeof obj !== "object") return null;
-        if (typeof obj.id !== "string") return null;
+        Object.assign(obj,{id:this.curId})
         this.#repository.push(obj);
+        this.curId = String((+this.curId)+1);
     }
     getById = (id)=> this.#repository.find(el=>el.id===id) || null;
 
@@ -32,33 +33,29 @@ class Service{
     replaceById(id,obj){
         const index = this.#repository.findIndex(obj=>obj.id===id); 
         if(index!=-1){
+            Object.assign(obj,{id:this.curId})
             this.#repository[index] = obj;
         }
     }
 }
 
 const personOne = {
-    id : "1",
     name : "Roman",
     age : "22"
 }
 const personTwo = {
-    id : "2",
     name : "Oleg",
     age : "30"
 }
 const personThree = {
-    id : "3",
     name : "Ivan",
     age : "90"
 }
 const personFour = {
-    id : "4",
     name : "Olga",
     age : "20"
 }
 const personFive = {
-    id : "5",
     name : "Marat",
     age : "80"
 }
